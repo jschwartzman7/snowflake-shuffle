@@ -1,0 +1,12 @@
+body{
+    display: block;
+    justify-items: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+.container{
+    margin:6px;
+    font-size: 20px;
+}
+canvas{
+    background-color: blue;
+}
