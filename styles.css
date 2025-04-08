@@ -1,12 +1,32 @@
+:root{
+    --blue: #0000FF;
+    --red: #FF0000;
+    --green: #34b234;
+    --backgroundColor: #afcde3;
+    --textColor: #333;
+    --buttonColor: #008CBA;
+}
 body{
-    display: block;
+    background-color: var(--backgroundColor);
     justify-items: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif
 }
-.container{
-    margin:6px;
-    font-size: 20px;
+#menuContainer{
+    justify-items: center;
+    margin:15px;
 }
 canvas{
-    background-color: blue;
+    background-color: var(----backgroundColor);
+}
+.button{
+    background-color: var(--green);
+    border-radius: 5px;
+    width: 120px;
+    text-align: center;
+    margin:20px;
+    padding:5px
+}
+.button:hover{
+    color:var(--backgroundColor);
+    cursor:pointer
 }
