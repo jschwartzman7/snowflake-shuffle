@@ -3,10 +3,10 @@ primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67
 encounteredStates = {};
 
 function hashOccupations(occupations){
-    let hashValue = 1;
+    let hashValue = 0;
     for(let i = 0; i < 19; i++){
-        if(occupations[i]){
-            hashValue *= primes[i];
+        if(!occupations[i]){
+            hashValue += Math.pow(2, i);
         }
     }
     return hashValue;
@@ -23,7 +23,6 @@ function markNextMove(currentState, nextState){
 
 function getOptimalSolution(boardState){
     let hashedBoard = hashOccupations(SnowflakeState.getOccupations(boardState));
-    alert(encounteredStates);
     if(Object.keys(encounteredStates).includes(hashedBoard)){
         return encounteredStates[hashedBoard];
     }
@@ -32,7 +31,6 @@ function getOptimalSolution(boardState){
         encounteredStates[hashedBoard] = SnowflakeState.getNumOccupied(boardState);
         return encounteredStates[hashedBoard];
     }
-    console.log("successors: ", successorStates.length);
     let bestScore = Number.MAX_VALUE;
     for(let successor of successorStates){
         bestScore = Math.min(bestScore, getOptimalSolution(successor));
@@ -42,7 +40,7 @@ function getOptimalSolution(boardState){
 }
 
 function generateMoves(boardState){
-    let successorsOccupations = [];
+    let successorsStates = [];
     for(let row of boardState.boardRows){
         for(let i = 0; i < row.length; i++){
             if(row[i].occupied){
@@ -50,23 +48,21 @@ function generateMoves(boardState){
             }
             if(i < row.length-2 && row[i+1].occupied && row[i+2].occupied){
                 let successorOccupations = SnowflakeState.getOccupations(boardState);
-                console.log("successorOccupations: ", successorOccupations);
                 successorOccupations[row[i].position] = true;
                 successorOccupations[row[i+1].position] = false;
                 successorOccupations[row[i+2].position] = false;
-                successorsOccupations.push(new SnowflakeState(successorOccupations));
+                successorsStates.push(new SnowflakeState(successorOccupations));
             }
             if(i >= 2 && row[i-1].occupied && row[i-2].occupied){
                 let successorOccupations = SnowflakeState.getOccupations(boardState);
-                console.log("successorOccupations: ", successorOccupations);
                 successorOccupations[row[i].position] = true;
                 successorOccupations[row[i-1].position] = false;
                 successorOccupations[row[i-2].position] = false;
-                successorsOccupations.push(new SnowflakeState(successorOccupations));
+                successorsStates.push(new SnowflakeState(successorOccupations));
             }
         }
     }
-    return successorsOccupations;
+    return successorsStates;
 }
 
 function getOptimalPath(currentState){
